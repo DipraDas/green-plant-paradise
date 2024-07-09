@@ -3,7 +3,7 @@ import logo from '../../assets/images/logo/green-paradise-logo.jpg';
 const Navbar = () => {
     return (
         <div className='container mx-auto'>
-            <div className='ps-28 pe-32'>
+            <div className='ps-28 pe-32 py-8'>
                 <div className="navbar bg-base-100">
                     <div className="navbar-start">
                         <div className="dropdown">
@@ -22,7 +22,7 @@ const Navbar = () => {
                                 <li><a>Item 3</a></li>
                             </ul>
                         </div>
-                        <img src={logo} className='w-56' alt="" />
+                        <img src={logo} className='w-40' alt="" />
                     </div>
                     <div className="navbar-center hidden lg:flex">
                         <div className='flex border items-center bg-gray-50 rounded-full'>
