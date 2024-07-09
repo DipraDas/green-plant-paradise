@@ -1,7 +1,9 @@
+import HeroSection from "./HeroSection/HeroSection";
+
 const Home = () => {
     return (
         <div>
-            <h1 className="text-black">HELooOOO</h1>
+            <HeroSection />
         </div>
     );
 };
