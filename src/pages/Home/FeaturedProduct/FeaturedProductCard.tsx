@@ -8,7 +8,7 @@ const FeaturedProductCard = () => {
             <p className='font-semibold mb-1'>Biotech Garden Jade Plant</p>
             <p className='font-semibold text-xl mb-4' >$22.00</p>
             <div>
-                <OutlineButton />
+                <OutlineButton title='ADD TO CART' />
             </div>
         </div>
     );
