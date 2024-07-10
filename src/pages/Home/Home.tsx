@@ -1,4 +1,5 @@
 import Discount from "./Discount/Discount";
+import FeaturedProduct from "./FeaturedProduct/FeaturedProduct";
 import HeroSection from "./HeroSection/HeroSection";
 import NewCollection from "./NewCollection/NewCollection";
 
@@ -8,6 +9,7 @@ const Home = () => {
             <HeroSection />
             {/* <Discount /> */}
             <NewCollection />
+            <FeaturedProduct />
         </div>
     );
 };
