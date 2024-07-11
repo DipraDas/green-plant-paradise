@@ -161,7 +161,7 @@ const Product = () => {
                         ADD PRODUCT
                     </h2>
                     <svg onClick={closeModal} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" className="size-7 cursor-pointer">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                 </div>
                 <form onSubmit={onSubmit} className='px-4'>
@@ -237,8 +237,8 @@ const Product = () => {
                             <input type="file" className="file-input file-input-bordered w-full" />
                         </div>
                         <div className='col-span-4'>
-                            <div className=" cursor-pointer mt-9 flex items-center gap-3">
-                                <input type="checkbox" className="checkbox" />
+                            <div className="cursor-pointer mt-9 flex items-center gap-3">
+                                <input type="checkbox" className="checkbox" {...register('featuredProduct')} />
                                 <p className="text">Featured Product</p>
                             </div>
                         </div>
