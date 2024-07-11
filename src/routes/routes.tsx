@@ -19,20 +19,13 @@ const router = createBrowserRouter([
             {
                 path: 'productDetails',
                 element: <ProductDetails />,
-            }
-        ]
-    },
-    {
-        // Root path renders the App component
-        path: '/product',
-        element: <Product />,
-        children: [
+            },
             {
-                index: true,
+                path: '/product',
                 element: <Product />,
             }
         ]
-    },
+    }
 ]);
 
 export default router;
