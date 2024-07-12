@@ -18,37 +18,50 @@ const Cart = () => {
             <div className='px-20'>
                 <p className='text-4xl tracking-widest my-12'>Cart </p>
                 <div className="grid grid-cols-12 items-start gap-8">
-                    <div className="col-span-8 border mb-20 rounded-lg">
-                        <table className="table table-zebra">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th className='flex justify-end'>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td>My tree plant</td>
-                                    <td>Bonsai</td>
-                                    <td>300</td>
-                                    <td>1</td>
-                                    <td>20</td>
-                                    <td className='flex justify-end gap-2'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" className="size-6 cursor-pointer">
-                                            <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
-                                        </svg>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div className="col-span-12 lg:col-span-8 border lg:mb-20 rounded-lg">
+                        <div className="overflow-x-auto">
+                            <table className="table table-zebra min-w-full">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th className="flex justify-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>1</th>
+                                        <td className='min-w-44'>My tree plant</td>
+                                        <td>Bonsai</td>
+                                        <td>300</td>
+                                        <td>1</td>
+                                        <td>20</td>
+                                        <td className="flex justify-end gap-2">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="red"
+                                                className="size-6 cursor-pointer"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </td>
+                                    </tr>
+                                    {/* Add more rows as needed */}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
-                    <div className="col-span-4 border mb-20 rounded-lg px-6 py-5">
+                    <div className="col-span-12 lg:col-span-4 border mb-20 rounded-lg px-6 py-5">
                         <div className="flex justify-between items-center mb-3">
                             <p className="tracking-wider text-sm text-gray-600">Product Price</p>
                             <p className="tracking-wider font-medium">$ 400</p>
