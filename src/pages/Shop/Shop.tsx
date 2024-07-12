@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Shop.css';
+import FeaturedProductCard from '../Home/FeaturedProduct/FeaturedProductCard';
 
 const Shop = () => {
 
@@ -62,7 +63,7 @@ const Shop = () => {
                         <div className='bg-gray-100 px-6 py-6 rounded-xl'>
                             <p className='text-2xl mb-3 tracking-wider'>Sort By</p>
                             <div className='w-24 h-[2px] bg-gray-300 mb-8'></div>
-                            <div className="grid grid-cols-2 gap-5 ">
+                            <div className="grid grid-cols-2 gap-5">
                                 <p className='tracking-wider text-center bg-white rounded-md py-3'>Default</p>
                                 <p className='tracking-wider text-center bg-white rounded-md py-3'>Latest</p>
                                 <p className='tracking-wider text-center bg-white rounded-md py-3'>High Price</p>
@@ -72,7 +73,22 @@ const Shop = () => {
                         </div>
                     </div>
                     <div className="col-span-9">
-
+                        <div className='flex items-center gap-1 justify-center border w-56 mx-auto py-3 rounded-md'>
+                            <p className='font-bold text-[#66a15b]'>12</p>
+                            <p className=''>Product Found of </p>
+                            <p className='font-bold text-[#66a15b]'>30</p>
+                        </div>
+                        <div className='grid grid-cols-3 gap-4 mt-10 mb-10'>
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                            <FeaturedProductCard />
+                        </div>
                     </div>
                 </div>
             </div>
