@@ -12,8 +12,8 @@ const Shop = () => {
                 <h1 className='text-5xl tracking-widest'>Shop</h1>
             </div>
             <div className='container mx-auto'>
-                <div className='px-32 grid grid-cols-12 py-20'>
-                    <div className="col-span-3">
+                <div className='sm:px-12 2xl:px-32 grid grid-cols-12 py-20'>
+                    <div className="col-span-12 lg:col-span-4 xl:col-span-3 px-3 mb-10">
                         <div className='bg-gray-100 px-6 py-6 rounded-xl mb-6'>
                             <label className="input input-bordered flex items-center gap-2">
                                 <input type="text" className="grow" placeholder="Search" />
@@ -72,13 +72,13 @@ const Shop = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-span-9">
+                    <div className="col-span-12 lg:col-span-8 xl:col-span-9">
                         <div className='flex items-center gap-1 justify-center border w-56 mx-auto py-3 rounded-md'>
                             <p className='font-bold text-[#66a15b]'>12</p>
                             <p className=''>Product Found of </p>
                             <p className='font-bold text-[#66a15b]'>30</p>
                         </div>
-                        <div className='grid grid-cols-3 gap-4 mt-10 mb-10'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-10 mb-10'>
                             <FeaturedProductCard />
                             <FeaturedProductCard />
                             <FeaturedProductCard />

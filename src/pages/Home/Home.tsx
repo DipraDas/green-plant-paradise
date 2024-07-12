@@ -8,11 +8,11 @@ const Home = () => {
     return (
         <div>
             <HeroSection />
-            {/* <Discount /> */}
+            {/* <Discount />  */}
             <NewCollection />
-            {/* <FeaturedProduct /> */}
-            {/* <About /> */}
-            {/* <AllProducts /> */}
+            <FeaturedProduct />
+            <About />
+            <AllProducts />
         </div>
     );
 };
