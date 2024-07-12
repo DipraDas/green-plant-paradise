@@ -5,9 +5,9 @@ const TopHeader = () => {
                 <div className="flex justify-between items-center px-32">
                     <p className="tracking-wide text-white text-sm">Welcome to our virtual store!</p>
                     <div className="flex gap-5">
-                        <p className="tracking-wide text-white text-sm">About Us</p>
+                        <a href="#about" className="tracking-wide text-white text-sm">About Us</a>
                         <div className="w-[2px] h-ful bg-gray-300"></div>
-                        <p className="tracking-wide text-white text-sm">Contact Us</p>
+                        <a href="#footer" className="tracking-wide text-white text-sm">Contact Us</a>
                     </div>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+import About from "./About/About";
 import AllProducts from "./AllProducts/AllProducts";
 import FeaturedProduct from "./FeaturedProduct/FeaturedProduct";
 import HeroSection from "./HeroSection/HeroSection";
@@ -10,6 +11,7 @@ const Home = () => {
             {/* <Discount /> */}
             <NewCollection />
             <FeaturedProduct />
+            <About />
             <AllProducts />
         </div>
     );
