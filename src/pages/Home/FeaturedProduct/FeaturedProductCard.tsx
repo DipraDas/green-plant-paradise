@@ -4,7 +4,7 @@ import OutlineButton from '../../../components/button/outlineButton/OutlineButto
 const FeaturedProductCard = () => {
     return (
         <div className='text-center'>
-            <img className='w-80' src={plant4} alt="" />
+            <img className='w-80 mx-auto' src={plant4} alt="" />
             <p className='font-semibold mb-1'>Biotech Garden Jade Plant</p>
             <p className='font-semibold text-xl mb-4' >$22.00</p>
             <div>

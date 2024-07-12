@@ -1,27 +1,29 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
     return (
         <section id='footer' className="bg-gray-50 border-t">
             <div className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
                 <nav className="flex flex-wrap justify-center -mx-5 -my-2">
                     <div className="px-5 py-2">
-                        <a href="#" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
+                        <Link to="/" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
                             HOME
-                        </a>
+                        </Link>
                     </div>
                     <div className="px-5 py-2">
-                        <a href="#" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
+                        <Link to="/shop" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
                             SHOP
-                        </a>
+                        </Link>
                     </div>
                     <div className="px-5 py-2">
-                        <a href="#" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
+                        <Link to="/category" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
                             ADD CATEGORY
-                        </a>
+                        </Link>
                     </div>
                     <div className="px-5 py-2">
-                        <a href="#" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
+                        <Link to="/product" className="text-sm leading-6 text-gray-500 hover:text-gray-900 tracking-wider">
                             ADD PRODUCT
-                        </a>
+                        </Link>
                     </div>
                 </nav>
                 <div className="flex justify-center mt-8 space-x-6">

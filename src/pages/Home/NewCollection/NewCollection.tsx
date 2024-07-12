@@ -4,13 +4,13 @@ import PrimaryButton from '../../../components/button/primaryButton/PrimaryButto
 
 const NewCollection = () => {
     return (
-        <div className='relative'>
+        <div className='relative mt-[1100px] lg:mt-0'>
             <div className="container mx-auto mt-32 mb-32">
-                <div className="px-32 grid grid-cols-12 justify-between items-center gap-12">
-                    <div className='col-span-6'>
+                <div className="sm:px-12 2xl:px-32 grid grid-cols-12 justify-between items-center gap-12">
+                    <div className='col-span-12 lg:col-span-6'>
                         <img src={plant1} alt="" />
                     </div>
-                    <div className='col-span-6'>
+                    <div className='col-span-12 lg:col-span-6'>
                         <p className='text-xl font-semibold text-gray-500 mb-3 tracking-wider'>
                             New Collection 2024
                         </p>
@@ -28,7 +28,7 @@ const NewCollection = () => {
                     </div>
                 </div>
             </div>
-            <div className='absolute -bottom-56'>
+            <div className='hidden 2xl:block relative lg:absolute top-96'>
                 <img className='w-64' src={plant2} alt="" />
             </div>
         </div>

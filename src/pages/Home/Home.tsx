@@ -10,9 +10,9 @@ const Home = () => {
             <HeroSection />
             {/* <Discount /> */}
             <NewCollection />
-            <FeaturedProduct />
-            <About />
-            <AllProducts />
+            {/* <FeaturedProduct /> */}
+            {/* <About /> */}
+            {/* <AllProducts /> */}
         </div>
     );
 };
