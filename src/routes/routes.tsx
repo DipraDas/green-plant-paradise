@@ -4,6 +4,7 @@ import App from "../App";
 import Home from "../pages/Home/Home";
 import Product from "../pages/Product/Product";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
+import Cart from "../pages/Cart/Cart";
 
 // Define the routes for the application
 const router = createBrowserRouter([
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
             {
                 path: '/product',
                 element: <Product />,
-            }
+            },
+            {
+                path: '/cart',
+                element: <Cart />,
+            },
         ]
     }
 ]);
