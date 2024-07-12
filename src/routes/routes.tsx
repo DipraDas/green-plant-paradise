@@ -6,6 +6,7 @@ import Product from "../pages/Product/Product";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Cart from "../pages/Cart/Cart";
 import Category from "../pages/Category/Category";
+import Shop from "../pages/Shop/Shop";
 
 // Define the routes for the application
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             {
                 path: '/category',
                 element: <Category />,
+            },
+            {
+                path: '/shop',
+                element: <Shop />,
             },
         ]
     }
