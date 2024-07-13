@@ -2,6 +2,9 @@ import plant3 from '../../../assets/images/product/plant-3.png';
 import { useGetProductQuery } from '../../../redux/features/product/productApi';
 import FeaturedProductCard from './FeaturedProductCard';
 
+interface Category {
+    name: string;
+}
 interface Product {
     _id: string;
     title: string;
@@ -9,6 +12,7 @@ interface Product {
     featured: boolean;
     image: string;
     rating: number
+    categories: Category[];
 }
 
 const FeaturedProduct = () => {

@@ -1,5 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import OutlineButton from '../../../components/button/outlineButton/OutlineButton';
+import { addToCart } from '../../../redux/features/cart/cartSlice';
+import { useAppDispatch } from '../../../redux/hooks';
+
+interface Category {
+    name: string;
+}
 
 interface Product {
     _id: string,
@@ -8,6 +14,7 @@ interface Product {
     price: number;
     featured: boolean;
     rating: number;
+    categories: Category[];
 }
 
 interface FeaturedProductCardProps {
@@ -17,6 +24,7 @@ interface FeaturedProductCardProps {
 const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
 
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const renderStars = (rating: number, color: string) => {
         const stars = [];
@@ -30,20 +38,36 @@ const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
         return stars;
     };
 
+    const handleAddToCart = () => {
+        const productId = product._id;
+        const cartItem = {
+            id: productId,
+            title: product.title,
+            price: product.price,
+            category: product.categories[0].name
+        };
+        dispatch(addToCart(cartItem));
+    };
+
     return (
         <div
             onClick={() => navigate(`./productDetails/${product._id}`)}
-            className='text-center pb-8 rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-110'>
+            className='text-center pb-8 rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-110'
+        >
             <img className='w-80 mx-auto h-56' src={product.image} alt="" />
             <p className='font-semibold mb-1'>{product.title}</p>
             <p className='font-semibold text-xl mb-1'>$ {product.price}</p>
             <div className='mb-4'>
                 {renderStars(product.rating, '#66a15b')}
             </div>
-            <div>
+            <div onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart();
+            }}>
                 <OutlineButton title='ADD TO CART' />
             </div>
         </div>
+
     );
 };
 

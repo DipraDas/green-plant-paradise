@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoryReducer from "./features/category/CategorySlice";
 import productReducer from "./features/product/productSlice";
+import cartReducer from './features/cart/cartSlice';
 import { baseApi } from "./api/baseApi";
 import {
   persistStore,
@@ -26,6 +27,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     category: categoryReducer,
     products: productReducer,
+    cart: cartReducer
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

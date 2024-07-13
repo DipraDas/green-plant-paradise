@@ -1,6 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo/green-paradise-logo.jpg';
+import { useAppSelector } from '../../redux/hooks';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const totalQuantity = useAppSelector(state => state.cart.cart.reduce((sum: number, item: any) => sum + item.quantity, 0));
     return (
         <div className='container mx-auto'>
             <div className='ps-28 pe-32 py-8'>
@@ -45,8 +51,11 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="navbar-end">
-                        <div className="indicator">
-                            <span className="indicator-item badge bg-[#66a15b] text-white">1</span>
+                        <div onClick={() => navigate('/cart')} className="indicator cursor-pointer">
+                            {
+                                totalQuantity > 0 &&
+                                <span className="indicator-item badge bg-[#66a15b] text-white">{totalQuantity}</span>
+                            }
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
