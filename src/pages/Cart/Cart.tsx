@@ -3,15 +3,62 @@ import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../../redux/features/cart/cartSlice';
 import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../redux/hooks';
+import { useGetProductQuery } from '../../redux/features/product/productApi';
+import { toast } from 'sonner';
 
 const Cart = () => {
     const cartItems = useAppSelector(state => state.cart.cart);
     const dispatch = useDispatch();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { data } = useGetProductQuery(undefined);
 
-    const { register, handleSubmit } = useForm();
+    const openModal = () => {
+        const modal = document.getElementById('checkOutModal') as HTMLDialogElement;
+        modal?.showModal();
+    };
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const handleModalClose = () => {
+        const modal = document.getElementById('checkOutModal') as HTMLDialogElement;
+        modal?.close();
+        reset();
+    };
+
+    const onSubmit = (formData: any) => {
+        const orderData = cartItems.map(item => ({
+            productId: item.id,
+            quantity: item.quantity
+        }));
+
+        // Combine formData with orderData
+        const combinedData = {
+            ...formData,
+            orderData: orderData
+        };
+
+        // Check if ordered quantity is available in stock
+        const stockCheckResults = orderData.map(orderItem => {
+            const product = data?.data?.find((product: any) => product._id === orderItem.productId);
+            console.log('product', product);
+            if (product) {
+                return {
+                    productId: orderItem.productId,
+                    isAvailable: product.quantity >= orderItem.quantity
+                };
+            }
+            return {
+                productId: orderItem.productId,
+                isAvailable: false
+            };
+        });
+
+        const isOrderValid = stockCheckResults.every(result => result.isAvailable);
+
+        if (isOrderValid) {
+            console.log("Ordered:", combinedData);
+        } else {
+            handleModalClose();
+            toast.warning('Stock not available for some products');
+        }
     };
 
     const handleRemoveFromCart = (productId: string) => {
@@ -46,10 +93,12 @@ const Cart = () => {
         ));
     };
 
-    const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    const deliveryFee = 40;
-    const discount = 0;
-    const totalAmount = subtotal + deliveryFee - discount;
+    // Calculate total amount, subtotal, and delivery fee
+    const deliveryFee = 40; // Assuming a fixed delivery fee
+    const productPrice = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    const subtotal = productPrice + deliveryFee;
+    const discount = 0; // Assuming no discount for now
+    const totalAmount = subtotal - discount;
 
     return (
         <div>
@@ -79,7 +128,7 @@ const Cart = () => {
                     <div className="col-span-12 lg:col-span-4 border mb-20 rounded-lg px-6 py-5">
                         <div className="flex justify-between items-center mb-3">
                             <p className="tracking-wider text-sm text-gray-600">Product Price</p>
-                            <p className="tracking-wider font-medium">$ {subtotal}</p>
+                            <p className="tracking-wider font-medium">$ {productPrice}</p>
                         </div>
                         <div className="flex justify-between items-center mb-3">
                             <p className="tracking-wider text-sm text-gray-600">Delivery Fee</p>
@@ -99,12 +148,80 @@ const Cart = () => {
                             <p className="tracking-wider text-lg text-gray-600">Total Amount</p>
                             <p className="tracking-wider text-xl font-bold">$ {totalAmount}</p>
                         </div>
-                        <div className="py-3 w-full text-center mt-6 mb-2 rounded-lg bg-[#66a15b] cursor-pointer" >
+                        <div onClick={openModal} className="py-3 w-full text-center mt-6 mb-2 rounded-lg bg-[#66a15b] cursor-pointer" >
                             <p className="text-white tracking-wider">Proceed to Checkout</p>
                         </div>
                     </div>
                 </div>
             </div>
+            <dialog id="checkOutModal" className="modal">
+                <div className="modal-box">
+                    <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleModalClose}>✕</button>
+                    </form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                {...register('name', { required: 'Name is required' })}
+                                className={`input input-bordered ${errors.name ? 'input-error' : ''}`}
+                            />
+                            {errors.name && <p className="text-red-500 text-sm">{String(errors.name.message)}</p>}
+                        </div>
+
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Phone Number</span>
+                            </label>
+                            <input
+                                type="text"
+                                {...register('phone', {
+                                    required: 'Phone number is required',
+                                    pattern: { value: /^[0-9]+$/, message: 'Phone number must be only digits' }
+                                })}
+                                className={`input input-bordered ${errors.phone ? 'input-error' : ''}`}
+                            />
+                            {errors.phone && <p className="text-red-500 text-sm">{String(errors.phone.message)}</p>}
+                        </div>
+
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+                            <input
+                                type="email"
+                                {...register('email', {
+                                    required: 'Email is required',
+                                    pattern: { value: /^[^@]+@[^@]+\.[^@]+$/, message: 'Invalid email address' }
+                                })}
+                                className={`input input-bordered ${errors.email ? 'input-error' : ''}`}
+                            />
+                            {errors.email && <p className="text-red-500 text-sm">{String(errors.email.message)}</p>}
+                        </div>
+
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Address</span>
+                            </label>
+                            <input
+                                type="text"
+                                {...register('address', { required: 'Address is required' })}
+                                className={`input input-bordered ${errors.address ? 'input-error' : ''}`}
+                            />
+                            {errors.address && <p className="text-red-500 text-sm">{String(errors.address.message)}</p>}
+                        </div>
+
+                        <div className="modal-action">
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="button" className="btn" onClick={handleModalClose}>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
         </div>
     );
 };
