@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from 'react-modal';
 import './Product.css';
 import { useForm } from "react-hook-form"
+import AddProductModal from './AddProductModal';
 
 const customStyles = {
     content: {
@@ -15,26 +16,26 @@ const customStyles = {
         borderRadius: '15px'
     },
     overlay: {
-        backgroundColor: 'rgba(0, 0, 0, 0.75)' // Dark background
+        backgroundColor: 'rgba(0, 0, 0, 0.25)' // Dark background
     }
 };
 
 Modal.setAppElement('#root');
 
 const Product = () => {
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     let subtitle;
 
-    const openModal = () => {
-        setIsOpen(true);
+    const openAddModal = () => {
+        setIsAddModalOpen(true);
     }
 
-    const closeModal = () => {
-        setIsOpen(false);
+    const closeAddModal = () => {
+        setIsAddModalOpen(false);
     }
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = handleSubmit((data) => console.log(data));
+    // const { register, handleSubmit, formState: { errors } } = useForm();
+    // const onSubmit = handleSubmit((data) => console.log(data));
 
     return (
         <div className="">
@@ -44,7 +45,7 @@ const Product = () => {
                         <p className='text-4xl tracking-widest'>All Products</p>
                         <div
                             className='px-5 py-3 bg-[#66a15b] rounded-lg cursor-pointer'
-                            onClick={openModal}
+                            onClick={openAddModal}
                         >
                             <p className='text-white tracking-wider'>Add Product</p>
                         </div>
@@ -148,7 +149,11 @@ const Product = () => {
                     </div>
                 </div>
             </div>
-            <Modal
+            <AddProductModal
+                modalIsOpen={isAddModalOpen}
+                closeModal={closeAddModal}
+            />
+            {/* <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 style={customStyles}
@@ -249,7 +254,7 @@ const Product = () => {
                         ADD PRODUCT
                     </button>
                 </form>
-            </Modal>
+            </Modal> */}
         </div>
     );
 };
