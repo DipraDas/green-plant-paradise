@@ -40,7 +40,7 @@ const AddProductModal = ({ modalIsOpen, closeModal }) => {
             const image = data.image[0];
             const formData = new FormData();
             formData.append("image", image);
-            const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+            const url = `https://api.imgbb.com/1/upload?key=c804b712774de48c844c1531dc5ffb84`;
 
             const imgResponse = await fetch(url, {
                 method: "POST",

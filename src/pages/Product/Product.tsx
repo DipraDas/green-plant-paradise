@@ -3,22 +3,7 @@ import Modal from 'react-modal';
 import './Product.css';
 import { useForm } from "react-hook-form"
 import AddProductModal from './AddProductModal';
-
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        width: '900px',
-        borderRadius: '15px'
-    },
-    overlay: {
-        backgroundColor: 'rgba(0, 0, 0, 0.25)' // Dark background
-    }
-};
+import { useGetProductQuery } from '../../redux/features/product/productApi';
 
 Modal.setAppElement('#root');
 
@@ -34,6 +19,12 @@ const Product = () => {
         setIsAddModalOpen(false);
     }
 
+    const { data, error, isLoading } = useGetProductQuery(undefined);
+
+    let productData = []
+    if (data && data.success) {
+        productData = data.data
+    }
     // const { register, handleSubmit, formState: { errors } } = useForm();
     // const onSubmit = handleSubmit((data) => console.log(data));
 
@@ -51,101 +42,60 @@ const Product = () => {
                         </div>
                     </div>
                     <div className="overflow-x-auto">
-                        <table className="table table-zebra">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
-                                    <th>Category</th>
-                                    <th className='flex justify-end'>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td>My tree plant</td>
-                                    <td>Dolar ipsum dolar ipsum folar ipsum Dolar ipsum dolar ipsum folar ipsum </td>
-                                    <td>300</td>
-                                    <td className='flex items-center gap-2'>
-                                        <div className='w-[10px] h-[10px] rounded-full bg-green-400'>
-                                        </div>
-                                        <p>20</p>
-                                    </td>
-                                    <td>Bonsai</td>
-                                    <td className='flex justify-end gap-2'>
-                                        <button className="btn btn-xs bg-violet-400 text-white tracking-wider">EDIT</button>
-                                        <button className="btn btn-xs bg-red-500 text-white tracking-wider">DELETE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>My tree plant</td>
-                                    <td>Dolar ipsum dolar ipsum folar ipsum Dolar ipsum dolar ipsum folar ipsum </td>
-                                    <td>300</td>
-                                    <td className='flex items-center gap-2'>
-                                        <div className='w-[10px] h-[10px] rounded-full bg-green-400'>
-                                        </div>
-                                        <p>20</p>
-                                    </td>
-                                    <td>Bonsai</td>
-                                    <td className='flex justify-end gap-2'>
-                                        <button className="btn btn-xs bg-violet-400 text-white tracking-wider">EDIT</button>
-                                        <button className="btn btn-xs bg-red-500 text-white tracking-wider">DELETE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td>My tree plant</td>
-                                    <td>Dolar ipsum dolar ipsum folar ipsum Dolar ipsum dolar ipsum folar ipsum </td>
-                                    <td>300</td>
-                                    <td className='flex items-center gap-2'>
-                                        <div className='w-[10px] h-[10px] rounded-full bg-green-400'>
-                                        </div>
-                                        <p>20</p>
-                                    </td>
-                                    <td>Bonsai</td>
-                                    <td className='flex justify-end gap-2'>
-                                        <button className="btn btn-xs bg-violet-400 text-white tracking-wider">EDIT</button>
-                                        <button className="btn btn-xs bg-red-500 text-white tracking-wider">DELETE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>4</th>
-                                    <td>My tree plant</td>
-                                    <td>Dolar ipsum dolar ipsum folar ipsum Dolar ipsum dolar ipsum folar ipsum </td>
-                                    <td>300</td>
-                                    <td className='flex items-center gap-2'>
-                                        <div className='w-[10px] h-[10px] rounded-full bg-green-400'>
-                                        </div>
-                                        <p>20</p>
-                                    </td>
-                                    <td>Bonsai</td>
-                                    <td className='flex justify-end gap-2'>
-                                        <button className="btn btn-xs bg-violet-400 text-white tracking-wider">EDIT</button>
-                                        <button className="btn btn-xs bg-red-500 text-white tracking-wider">DELETE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>5</th>
-                                    <td>My tree plant</td>
-                                    <td>Dolar ipsum dolar ipsum folar ipsum Dolar ipsum dolar ipsum folar ipsum </td>
-                                    <td>300</td>
-                                    <td className='flex items-center gap-2'>
-                                        <div className='w-[10px] h-[10px] rounded-full bg-green-400'>
-                                        </div>
-                                        <p>20</p>
-                                    </td>
-                                    <td>Bonsai</td>
-                                    <td className='flex justify-end gap-2'>
-                                        <button className="btn btn-xs bg-violet-400 text-white tracking-wider">EDIT</button>
-                                        <button className="btn btn-xs bg-red-500 text-white tracking-wider">DELETE</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {
+                            productData.length ?
+                                <table className="table table-zebra">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                            <th>Category</th>
+                                            <th className='flex justify-end'>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            productData.map((product, index) => (
+                                                <tr>
+                                                    <th>{index + 1}</th>
+                                                    <td>{product.title}</td>
+                                                    <td>{product.description}</td>
+                                                    <td>{product.price}</td>
+                                                    <td>{product.quantity}</td>
+                                                    <td>{product.categories[0].name}</td>
+                                                    <td className='flex justify-end gap-2'>
+                                                        <button className="btn btn-xs bg-violet-400 text-white tracking-wider">EDIT</button>
+                                                        <button className="btn btn-xs bg-red-500 text-white tracking-wider">DELETE</button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+
+                                        <tr>
+                                            <th>5</th>
+                                            <td>My tree plant</td>
+                                            <td>Dolar ipsum dolar ipsum folar ipsum Dolar ipsum dolar ipsum folar ipsum </td>
+                                            <td>300</td>
+                                            <td className='flex items-center gap-2'>
+                                                <div className='w-[10px] h-[10px] rounded-full bg-green-400'>
+                                                </div>
+                                                <p>20</p>
+                                            </td>
+                                            <td>Bonsai</td>
+                                            <td className='flex justify-end gap-2'>
+                                                <button className="btn btn-xs bg-violet-400 text-white tracking-wider">EDIT</button>
+                                                <button className="btn btn-xs bg-red-500 text-white tracking-wider">DELETE</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table> :
+                                <div>
+                                    No product found
+                                </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -153,7 +103,24 @@ const Product = () => {
                 modalIsOpen={isAddModalOpen}
                 closeModal={closeAddModal}
             />
-            {/* <Modal
+        </div>
+    );
+};
+
+export default Product;
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 style={customStyles}
@@ -255,8 +222,3 @@ const Product = () => {
                     </button>
                 </form>
             </Modal> */}
-        </div>
-    );
-};
-
-export default Product;

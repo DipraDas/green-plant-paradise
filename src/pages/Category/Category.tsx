@@ -126,9 +126,9 @@ const Category = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            categoryData.map(category => (
+                                            categoryData.map((category, index) => (
                                                 <tr>
-                                                    <th>1</th>
+                                                    <th>{index + 1}</th>
                                                     <td className='tracking-widest'>{category.name}</td>
                                                     <td className='flex justify-end gap-2'>
                                                         <button className="btn btn-xs bg-violet-400 text-white tracking-wider" onClick={() => handleEditCategory(category)}>EDIT</button>

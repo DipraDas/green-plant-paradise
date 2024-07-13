@@ -8,14 +8,16 @@ const categoryApi = baseApi.injectEndpoints({
         method: "POST",
         body: categoryInfo,
       }),
-      invalidatesTags: [{ type: "Category", id: "LIST" }],
+      // invalidatesTags: [{ type: "Category", id: "LIST" }],
+      invalidatesTags: ['Category']
     }),
     getCategory: builder.query({
       query: () => ({
         url: "/category",
         method: "GET",
       }),
-      providesTags: [{ type: "Category", id: "LIST" }],
+      // providesTags: [{ type: "Category", id: "LIST" }],
+      providesTags: ['Category'],
     }),
     editCategory: builder.mutation({
       query: ({ id, name }) => ({
@@ -23,14 +25,16 @@ const categoryApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: { name },
       }),
-      invalidatesTags: [{ type: "Category", id: "LIST" }],
+      // invalidatesTags: [{ type: "Category", id: "LIST" }],
+      invalidatesTags: ['Category']
     }),
     deleteCategory: builder.mutation({
       query: (categoryId) => ({
         url: `/category/${categoryId}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Category", id: "LIST" }],
+      // invalidatesTags: [{ type: "Category", id: "LIST" }],
+      invalidatesTags: ['Category']
     }),
   }),
 });
