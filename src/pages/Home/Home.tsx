@@ -1,4 +1,5 @@
 import About from "./About/About";
+import AllCategory from "./AllCategory/AllCategory";
 import AllProducts from "./AllProducts/AllProducts";
 import FeaturedProduct from "./FeaturedProduct/FeaturedProduct";
 import HeroSection from "./HeroSection/HeroSection";
@@ -11,6 +12,7 @@ const Home = () => {
             <HeroSection />
             {/* <Discount />  */}
             <NewCollection />
+            <AllCategory />
             <FeaturedProduct />
             <About />
             <AllProducts />
