@@ -19,7 +19,7 @@ const FeaturedProduct = () => {
 
     const { data } = useGetProductQuery(undefined);
     const productData = data?.data;
-    const featuredProducts = productData?.filter((product: { featured: boolean; }) => product.featured);
+    const featuredProducts = productData?.filter((product: { featured: boolean; }) => product.featured).slice(0, 5);
 
     return (
         <div className="mb-24">
