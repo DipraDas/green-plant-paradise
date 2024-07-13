@@ -3,7 +3,7 @@ import { useGetProductQuery } from '../../../redux/features/product/productApi';
 import FeaturedProductCard from './FeaturedProductCard';
 
 interface Product {
-    id: string;
+    _id: string;
     title: string;
     price: number;
     featured: boolean;
@@ -30,7 +30,7 @@ const FeaturedProduct = () => {
                                 (
                                     product: Product) => (
                                     <FeaturedProductCard
-                                        key={product.id}
+                                        key={product._id}
                                         product={product}
                                     />
                                 )

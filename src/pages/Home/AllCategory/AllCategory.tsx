@@ -25,7 +25,7 @@ const AllCategory = () => {
                         }, index: number) => (
                             <div
                                 key={index}
-                                className='cursor-pointer flex gap-6 w-72 bg-green-50 border border-green-200 rounded-lg py-5 justify-center items-center shadow-md'
+                                className='cursor-pointer flex gap-6 w-72 bg-green-50 border border-green-200 rounded-lg py-5 justify-center items-center shadow-md  transition-all duration-300  transform hover:scale-110'
                             >
                                 <img src={plant7} className='w-6' alt="" />
                                 <p className='text-lg tracking-wider'>{category.name}</p>
