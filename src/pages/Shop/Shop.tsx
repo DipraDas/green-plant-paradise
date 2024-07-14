@@ -18,15 +18,12 @@ interface Product {
     categories: Category[];
 }
 
-interface SelectedCategory {
-    category: string;
-}
-
 const Shop = () => {
     const dispatch = useAppDispatch();
     const [sortBy, setSortBy] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const selectedCategory: SelectedCategory = useAppSelector(state => state.filter.filterByCategory);
+    const selectedCategory: any = useAppSelector(state => state.filter.filterByCategory);
 
     const { data: productDataResponse } = useGetProductQuery(undefined);
     const productData = productDataResponse?.data || [];
@@ -48,6 +45,12 @@ const Shop = () => {
                 : productData.filter((product: Product) => product.categories.some(cat => cat.name === selectedCategory.category))
             : productData;
 
+        if (searchQuery) {
+            filteredProducts = filteredProducts.filter((product: Product) =>
+                product.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+
         switch (sortBy) {
             case 'rated':
                 return filteredProducts.slice().sort((a: Product, b: Product) => b.rating - a.rating);
@@ -66,7 +69,7 @@ const Shop = () => {
 
     useEffect(() => {
         getFilteredAndSortedProducts();
-    }, [sortBy, selectedCategory]);
+    }, [sortBy, selectedCategory, searchQuery]);
 
     return (
         <div>
@@ -78,7 +81,13 @@ const Shop = () => {
                     <div className="col-span-12 lg:col-span-4 xl:col-span-3 px-3 mb-10">
                         <div className='bg-gray-100 px-6 py-6 rounded-xl mb-6'>
                             <label className="input input-bordered flex items-center gap-2">
-                                <input type="text" className="grow" placeholder="Search" />
+                                <input
+                                    type="text"
+                                    className="grow"
+                                    placeholder="Search"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 16 16"

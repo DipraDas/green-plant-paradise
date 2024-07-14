@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FilterState {
-    filterByCategory: string;
+    filterByCategory: any;
 }
 
 const initialState: FilterState = {
