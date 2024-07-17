@@ -50,14 +50,23 @@ const Navbar = () => {
     };
 
     const handleAddToCart = (product: Product) => {
-        const cartItem = {
-            id: product._id,
-            title: product.title,
-            price: product.price,
-            category: product.categories[0].name
-        };
-        dispatch(addToCart(cartItem));
-        toast.success('Product added to cart');
+        fetch(`http://localhost:5000/api/v1/product/${product._id}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log('>>----', data.data);
+                if (data.data.quantity >= 1) {
+                    const cartItem = {
+                        id: product._id,
+                        title: product.title,
+                        price: product.price,
+                        category: product.categories[0].name
+                    };
+                    dispatch(addToCart(cartItem));
+                    toast.success('Product added to cart');
+                } else {
+                    toast.warning('Product is not available at this moment');
+                }
+            });
     };
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

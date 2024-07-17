@@ -49,17 +49,24 @@ const ProductCard = ({ product }: FeaturedProductCardProps) => {
         return stars;
     };
 
-    const handleAddToCart = (product: Product) => {
-        console.log('>>>>', product);
-        const productId = product._id;
-        const cartItem: TCartItem = {
-            id: productId,
-            title: product.title,
-            price: product.price,
-            category: product.categories[0].name // Accessing name property to get a string
-        };
-        dispatch(addToCart(cartItem));
-        toast.success('Product added to cart');
+    const handleAddToCart = () => {
+        fetch(`http://localhost:5000/api/v1/product/${product._id}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log('>>----', data.data);
+                if (data.data.quantity >= 1) {
+                    const cartItem = {
+                        id: product._id,
+                        title: product.title,
+                        price: product.price,
+                        category: product.categories[0].name
+                    };
+                    dispatch(addToCart(cartItem));
+                    toast.success('Product added to cart');
+                } else {
+                    toast.warning('Product is not available at this moment');
+                }
+            });
     };
 
     return (
@@ -75,7 +82,7 @@ const ProductCard = ({ product }: FeaturedProductCardProps) => {
             </div>
             <div onClick={(e) => {
                 e.stopPropagation();
-                handleAddToCart(product)
+                handleAddToCart()
             }}>
                 <OutlineButton title='ADD TO CART' />
             </div>

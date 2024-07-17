@@ -1,5 +1,10 @@
 import { baseApi } from "../../api/baseApi";
 
+interface QueryArgs {
+  page?: number;
+  limit?: number;
+}
+
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createProduct: builder.mutation({
@@ -14,7 +19,7 @@ const productApi = baseApi.injectEndpoints({
       invalidatesTags: [{ type: "product", id: "LIST" }],
     }),
     getProduct: builder.query({
-      query: ({ page, limit } = {}) => {
+      query: ({ page, limit }: QueryArgs = {}) => {
         let url = '/product';
         if (page !== undefined && limit !== undefined) {
           url += `?page=${page}&limit=${limit}`;

@@ -26,7 +26,6 @@ const AllProducts = () => {
 
     const productData = data?.data;
     const totalPages = data?.meta?.totalPage || 1;
-    console.log('>>>>>', productData);
 
     const handleNextPage = () => {
         if (page < totalPages) {

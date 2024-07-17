@@ -27,8 +27,6 @@ const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-
-
     const renderStars = (rating: number, color: string) => {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
@@ -42,17 +40,23 @@ const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
     };
 
     const handleAddToCart = () => {
-        const productId = product._id;
-        const cartItem = {
-            id: productId,
-            title: product.title,
-            price: product.price,
-            category: product.categories[0].name
-        };
-        // const { data } = useGetSingleProductQuery(productId);
-        // console.log('>>', data) 
-        dispatch(addToCart(cartItem));
-        toast.success('Product added to cart')
+        fetch(`http://localhost:5000/api/v1/product/${product._id}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log('>>----', data.data);
+                if (data.data.quantity >= 1) {
+                    const cartItem = {
+                        id: product._id,
+                        title: product.title,
+                        price: product.price,
+                        category: product.categories[0].name
+                    };
+                    dispatch(addToCart(cartItem));
+                    toast.success('Product added to cart');
+                } else {
+                    toast.warning('Product is not available at this moment');
+                }
+            });
     };
 
     return (
