@@ -87,9 +87,9 @@ const Product = () => {
                                             <th>#</th>
                                             <th></th>
                                             <th>Title</th>
-                                            <th>Description</th>
+                                            {/* <th>Description</th> */}
                                             <th>Price</th>
-                                            <th>Stock</th>
+                                            {/* <th>Stock</th> */}
                                             <th>Category</th>
                                             <th className='flex justify-end'>Action</th>
                                         </tr>
@@ -99,13 +99,13 @@ const Product = () => {
                                             productData.map((product, index) => (
                                                 <tr key={product._id}>
                                                     <th>{index + 1}</th>
-                                                    <th><img className='w-32 border' src={product.image} alt="" /></th>
+                                                    <th><img className='w-24 border' src={product.image} alt="" /></th>
                                                     <td>{product.title}</td>
-                                                    <td>{product.description}</td>
+                                                    {/* <td>{product.description}</td> */}
                                                     <td>{product.price}</td>
-                                                    <td>{product.quantity}</td>
+                                                    {/* <td>{product.quantity}</td> */}
                                                     <td>{product.categories[0].name}</td>
-                                                    <td className='flex justify-end gap-2'>
+                                                    <td className='flex justify-end items-center gap-2'>
                                                         <button
                                                             className="btn btn-xs bg-violet-400 text-white tracking-wider"
                                                             onClick={() => openEditModal(product)}
