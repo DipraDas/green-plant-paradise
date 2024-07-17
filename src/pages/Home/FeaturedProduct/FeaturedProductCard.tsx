@@ -3,6 +3,7 @@ import OutlineButton from '../../../components/button/outlineButton/OutlineButto
 import { addToCart } from '../../../redux/features/cart/cartSlice';
 import { useAppDispatch } from '../../../redux/hooks';
 import { toast } from 'sonner';
+import { useGetSingleProductQuery } from '../../../redux/features/product/productApi';
 
 interface Category {
     name: string;
@@ -23,9 +24,10 @@ interface FeaturedProductCardProps {
 }
 
 const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
-
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
+
 
     const renderStars = (rating: number, color: string) => {
         const stars = [];
@@ -47,6 +49,8 @@ const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
             price: product.price,
             category: product.categories[0].name
         };
+        // const { data } = useGetSingleProductQuery(productId);
+        // console.log('>>', data) 
         dispatch(addToCart(cartItem));
         toast.success('Product added to cart')
     };
