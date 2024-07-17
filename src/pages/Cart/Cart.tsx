@@ -3,15 +3,15 @@ import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../../redux/features/cart/cartSlice';
 import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../redux/hooks';
-import { useGetProductQuery } from '../../redux/features/product/productApi';
 import { toast } from 'sonner';
-import { createOrder } from '../../redux/features/order/orderApi';
+import { useCreateOrderMutation } from '../../redux/features/order/orderApi';
 
 const Cart = () => {
     const cartItems = useAppSelector(state => state.cart.cart);
     const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const { data } = useGetProductQuery(undefined);
+    // const { data } = useGetProductQuery(undefined);
+    const [createOrder] = useCreateOrderMutation();
 
     const openModal = () => {
         const modal = document.getElementById('checkOutModal') as HTMLDialogElement;
@@ -26,18 +26,28 @@ const Cart = () => {
 
     const onSubmit = async (formData: any) => {
         const orderData = cartItems.map(item => ({
-            productId: item.id,
+            id: item.id,
             quantity: item.quantity
         }));
 
-        // Combine formData with orderData
         const combinedData = {
             ...formData,
-            orderData: orderData
+            product: orderData
         };
+        console.log('>>>>>>>>', combinedData);
 
-        const x = await createOrder(combinedData).unwrap();
-        console.log('XX>>', x);
+        const response = await createOrder(combinedData);
+        console.log('------', response)
+        console.log('res st', response.data.success);
+        console.log('resErr', response.error)
+        if (response?.error?.status === 400) {
+            toast.warning(response?.error?.data?.message);
+            handleModalClose();
+        }
+        if (response?.data?.success) {
+            toast.success('Product Ordered Successfully.');
+            handleModalClose();
+        }
 
         // // Check if ordered quantity is available in stock
         // const stockCheckResults = orderData.map(orderItem => {

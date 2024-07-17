@@ -13,5 +13,5 @@ const orderApi = baseApi.injectEndpoints({
 });
 
 export const {
-    createOrder
+    useCreateOrderMutation
 } = orderApi;
