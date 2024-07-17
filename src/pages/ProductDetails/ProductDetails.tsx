@@ -1,11 +1,30 @@
 import { useParams } from 'react-router-dom';
-import PrimaryButton from '../../components/button/primaryButton/PrimaryButton';
 import { useGetSingleProductQuery } from '../../redux/features/product/productApi';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/features/cart/cartSlice';
+import { toast } from 'sonner';
+
+interface Category {
+    name: string;
+}
+
+interface Product {
+    _id: string;
+    image: string;
+    title: string;
+    price: number;
+    featured: boolean;
+    rating: number;
+    categories: Category[];
+    quantity: number;
+    description: string;
+    briefDescription: string;
+}
 
 const ProductDetails = () => {
-    const { id } = useParams();
-    console.log(id)
+    const { id } = useParams<{ id: string }>();
+    const dispatch = useDispatch();
 
     const { data } = useGetSingleProductQuery(id);
     const productData = data?.data;
@@ -13,15 +32,27 @@ const ProductDetails = () => {
     console.log(productData);
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+        window.scrollTo(0, 0);
+    }, []);
+
+    const handleAddToCart = (product: Product) => {
+        const productId = product._id;
+        const cartItem = {
+            id: productId,
+            title: product.title,
+            price: product.price,
+            category: product.categories[0].name
+        };
+        dispatch(addToCart(cartItem));
+        toast.success('Product added to cart');
+    };
 
     return (
         <div>
             <div className="container mx-auto mt-20 mb-20">
                 <div className="sm:px-12 2xl:px-32 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                    <div className="border shadow-md  mx-auto w-[500px] h-[500px] flex justify-center items-center">
-                        <img className='w-[450px]' src={productData?.image} alt="" />
+                    <div className="border shadow-md mx-auto w-[500px] h-[500px] flex justify-center items-center">
+                        <img className='w-[450px]' src={productData?.image} alt={productData?.title} />
                     </div>
                     <div className='px-10'>
                         <p className='text-4xl font-semibold mb-5'>
@@ -37,30 +68,31 @@ const ProductDetails = () => {
                             {
                                 productData?.quantity > 0 ?
                                     (
-                                        <p className='font-bold text-green-500 '>
+                                        <p className='font-bold text-green-500'>
                                             In Stock
                                         </p>
                                     )
                                     :
                                     (
-                                        <p className='font-bold text-red-500 '>
+                                        <p className='font-bold text-red-500'>
                                             Not In Stock
                                         </p>
                                     )
                             }
-
                         </div>
                         <p className='text-gray-400 tracking-wider mb-10'>
                             {productData?.description}
                         </p>
-                        <div className='mb-8'>
-                            <PrimaryButton title='ADD TO CART' />
+                        <div className='mb-8' onClick={() => handleAddToCart(productData as Product)}>
+                            <div className='py-3 px-5 bg-[#66a15b] inline text-white rounded-md tracking-wider cursor-pointer'>
+                                ADD TO CART
+                            </div>
                         </div>
                         <div className='flex gap-1 items-center mb-2'>
                             <p className='text-gray-500'>
                                 Category :
                             </p>
-                            <p className='font-bold text-[#66a15b] '>
+                            <p className='font-bold text-[#66a15b]'>
                                 {productData?.categories[0]?.name}
                             </p>
                         </div>
@@ -68,29 +100,10 @@ const ProductDetails = () => {
                             <p className='text-gray-500'>
                                 In Stock :
                             </p>
-                            <p className='font-bold text-[#66a15b] '>
+                            <p className='font-bold text-[#66a15b]'>
                                 {productData?.quantity}
                             </p>
                         </div>
-                        {/* <div className='flex gap-3 items-center mb-5'>
-                            <p className='text-gray-500 min-w-10'>
-                                Tags :
-                            </p>
-                            <div className='flex gap-2'>
-                                <p className='font-bold text-gray-600 bg-green-100 px-3 py-[2px] rounded-md'>
-                                    Plant
-                                </p>
-                                <p className='font-bold text-gray-600 bg-green-100 px-3 py-[2px] rounded-md'>
-                                    Green
-                                </p>
-                                <p className='font-bold text-gray-600 bg-green-100 px-3 py-[2px] rounded-md'>
-                                    House Decor
-                                </p>
-                                <p className='font-bold text-gray-600 bg-green-100 px-3 py-[2px] rounded-md'>
-                                    Premium
-                                </p>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
                 <div className='px-10 sm:px-12 2xl:px-32 mt-20'>

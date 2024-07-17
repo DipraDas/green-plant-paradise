@@ -1,14 +1,31 @@
 import { useNavigate } from 'react-router-dom';
 import OutlineButton from '../../../components/button/outlineButton/OutlineButton';
-// import { addToCart } from '../../../redux/features/cart/cartSlice';
-// import { useAppDispatch } from '../../../redux/hooks';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../redux/features/cart/cartSlice';
+import { toast } from 'sonner';
+
+interface Category {
+    name: string;
+}
 
 interface Product {
-    _id: string,
+    _id: string;
     image: string;
     title: string;
     price: number;
+    featured: boolean;
     rating: number;
+    categories: Category[];
+    quantity: number;
+    description: string;
+    briefDescription: string;
+}
+
+interface TCartItem {
+    id: string;
+    title: string;
+    price: number;
+    category: string; // Changed from Category to string
 }
 
 interface FeaturedProductCardProps {
@@ -18,7 +35,7 @@ interface FeaturedProductCardProps {
 const ProductCard = ({ product }: FeaturedProductCardProps) => {
 
     const navigate = useNavigate();
-    // const dispatch = useAppDispatch();
+    const dispatch = useDispatch();
 
     const renderStars = (rating: number, color: string) => {
         const stars = [];
@@ -32,19 +49,22 @@ const ProductCard = ({ product }: FeaturedProductCardProps) => {
         return stars;
     };
 
-    const handleAddToCart = () => {
-        // const productId = product._id;
-        // const cartItem = {
-        //     id: productId,
-        //     title: product.title,
-        //     price: product.price
-        // };
-        // dispatch(addToCart(cartItem));
+    const handleAddToCart = (product: Product) => {
+        console.log('>>>>', product);
+        const productId = product._id;
+        const cartItem: TCartItem = {
+            id: productId,
+            title: product.title,
+            price: product.price,
+            category: product.categories[0].name // Accessing name property to get a string
+        };
+        dispatch(addToCart(cartItem));
+        toast.success('Product added to cart');
     };
 
     return (
         <div
-            onClick={() => navigate(`./productDetails/${product._id}`)}
+            onClick={() => navigate(`/productDetails/${product._id}`)}
             className='text-center pb-8 rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer'
         >
             <img className='w-80 mx-auto h-72' src={product.image} alt="" />
@@ -55,12 +75,11 @@ const ProductCard = ({ product }: FeaturedProductCardProps) => {
             </div>
             <div onClick={(e) => {
                 e.stopPropagation();
-                handleAddToCart();
+                handleAddToCart(product)
             }}>
                 <OutlineButton title='ADD TO CART' />
             </div>
         </div>
-
     );
 };
 

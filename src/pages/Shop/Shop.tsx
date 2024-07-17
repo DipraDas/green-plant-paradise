@@ -16,6 +16,10 @@ interface Product {
     image: string;
     rating: number;
     categories: Category[];
+    featured: boolean;
+    quantity: number;
+    description: string;
+    briefDescription: string;
 }
 
 const Shop = () => {
@@ -24,6 +28,10 @@ const Shop = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const selectedCategory: any = useAppSelector(state => state.filter.filterByCategory);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     const { data: productDataResponse } = useGetProductQuery(undefined);
     const productData = productDataResponse?.data || [];
@@ -118,8 +126,7 @@ const Shop = () => {
                                     <div key={index}>
                                         <div
                                             onClick={() => handleCategory(category.name)}
-                                            className={`flex gap-1 my-4 items-center cursor-pointer ${selectedCategory.category === category.name ? 'text-[#66a15b]' : 'text-gray-600'
-                                                }`}
+                                            className={`flex gap-1 my-4 items-center cursor-pointer ${selectedCategory.category === category.name ? 'text-[#66a15b]' : 'text-gray-600'}`}
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />

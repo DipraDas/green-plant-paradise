@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 interface Product {
     _id: string;
     title: string;
@@ -10,6 +12,8 @@ interface FeaturedProductCardProps {
 }
 
 const AllProductsCard = ({ product }: FeaturedProductCardProps) => {
+
+    const navigate = useNavigate();
 
     const renderStars = (rating: number, color: string) => {
         const stars = [];
@@ -33,7 +37,10 @@ const AllProductsCard = ({ product }: FeaturedProductCardProps) => {
                 </div>
             </div>
             <div className='absolute inset-0 bg-black bg-opacity-50 rounded opacity-0 hover:opacity-100 transition-opacity duration-300 flex justify-center items-center'>
-                <div className='text-black text-sm font-bold py-2 px-4 bg-white rounded-lg tracking-widest' >
+                <div
+                    onClick={() => navigate(`./productDetails/${product._id}`)}
+                    className='text-black text-sm font-bold py-2 px-4 bg-white rounded-lg tracking-widest'
+                >
                     VIEW DETAILS
                 </div>
             </div>
