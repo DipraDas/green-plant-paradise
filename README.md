@@ -1,30 +1,76 @@
-# React + TypeScript + Vite
+# Green Plant Paradise 🍀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction 🌱
 
-Currently, two official plugins are available:
+Green Plant Paradise is an innovative e-commerce platform designed to bring the beauty and benefits of nature into homes. Our platform offers a wide variety of home decorative small trees that are perfect for enhancing interior spaces with a touch of green. Each plant is carefully selected to not only beautify your home but also contribute positively to the environment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project Description 🌱
 
-## Expanding the ESLint configuration
+### Home
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- The central hub showcasing featured products, promotions, and new arrivals.
 
-- Configure the top-level `parserOptions` property like this:
+### Products:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- A comprehensive catalog of all available plants, with options to filter and sort by category, price, and popularity.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Add Products:
+
+- An administrative page where users can add new products to the catalog, complete with descriptions, images, and pricing details.
+
+### Add Categories:
+
+- An administrative page where users can create and manage product categories, allowing for better organization and easier navigation.
+
+## Sub-Pages:
+
+### Product Details:
+
+- Detailed information about each plant, including care instructions, customer reviews, and related products.
+
+### Cart:
+
+- A user-friendly interface where customers can review selected items, adjust quantities, and proceed to checkout.
+
+## Features
+
+- Users can create new categories to better organize the product catalog.
+- Each category can contain multiple products, allowing for a diverse and extensive selection.
+- Users can add products to their cart, view their selections, and make modifications as needed.
+- A streamlined checkout process enabling users to place orders with ease.
+
+## Technology Stack 🌱
+
+- Frontend: React, Redux
+- Backend: Nodejs, Express, MongoDb, Mongooes, Zod
+
+## Installation Guideline 🌱
+
+### Frontend
+
+    1. git clone https://github.com/DipraDas/green-plant-paradise
+
+    2. Make .env.local in the root folder. And paste the following code
+            ifudhgldf
+            flhgsfhlg
+            dsfhlghdflg
+
+    3. npm install
+
+    Finally,
+        For run the project- npm run dev
+
+### Backend
+
+    1. git clone https://github.com/DipraDas/green-plant-paradise-backend
+
+    2. Make .env file in the root folder. And paste the following code
+        NODE_ENV= development
+        PORT=5000
+        DATABASE_URL=mongodb+srv://green-plant-paradise:afygxsvB0DgeoH51@cluster0.slxro.mongodb.net/green-planet-paradise?retryWrites=true&w=majority&appName=Cluster0
+
+
+    3. npm install
+
+    Finally,
+        For run the project- npm run start:local
