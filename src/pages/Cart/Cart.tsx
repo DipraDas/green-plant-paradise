@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../redux/hooks';
 import { useGetProductQuery } from '../../redux/features/product/productApi';
 import { toast } from 'sonner';
+import { createOrder } from '../../redux/features/order/orderApi';
 
 const Cart = () => {
     const cartItems = useAppSelector(state => state.cart.cart);
@@ -23,7 +24,7 @@ const Cart = () => {
         reset();
     };
 
-    const onSubmit = (formData: any) => {
+    const onSubmit = async (formData: any) => {
         const orderData = cartItems.map(item => ({
             productId: item.id,
             quantity: item.quantity
@@ -35,30 +36,33 @@ const Cart = () => {
             orderData: orderData
         };
 
-        // Check if ordered quantity is available in stock
-        const stockCheckResults = orderData.map(orderItem => {
-            const product = data?.data?.find((product: any) => product._id === orderItem.productId);
-            console.log('product', product);
-            if (product) {
-                return {
-                    productId: orderItem.productId,
-                    isAvailable: product.quantity >= orderItem.quantity
-                };
-            }
-            return {
-                productId: orderItem.productId,
-                isAvailable: false
-            };
-        });
+        const x = await createOrder(combinedData).unwrap();
+        console.log('XX>>', x);
 
-        const isOrderValid = stockCheckResults.every(result => result.isAvailable);
+        // // Check if ordered quantity is available in stock
+        // const stockCheckResults = orderData.map(orderItem => {
+        //     const product = data?.data?.find((product: any) => product._id === orderItem.productId);
+        //     console.log('product', product);
+        //     if (product) {
+        //         return {
+        //             productId: orderItem.productId,
+        //             isAvailable: product.quantity >= orderItem.quantity
+        //         };
+        //     }
+        //     return {
+        //         productId: orderItem.productId,
+        //         isAvailable: false
+        //     };
+        // });
 
-        if (isOrderValid) {
-            console.log("Ordered:", combinedData);
-        } else {
-            handleModalClose();
-            toast.warning('Stock not available for some products');
-        }
+        // const isOrderValid = stockCheckResults.every(result => result.isAvailable);
+
+        // if (isOrderValid) {
+        //     console.log("Ordered:", combinedData);
+        // } else {
+        //     handleModalClose();
+        //     toast.warning('Stock not available for some products');
+        // }
     };
 
     const handleRemoveFromCart = (productId: string) => {

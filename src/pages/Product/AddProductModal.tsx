@@ -63,7 +63,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ modalIsOpen, closeMod
                     briefDescription: data.briefDescription,
                     quantity: parseInt(data.quantity),
                     rating: parseInt(data.rating),
-                    categories: [data.category], // Assuming data.categories is an array of category IDs
+                    categories: [data.category],
                     featured: data.featuredProduct
                 };
 
