@@ -159,7 +159,7 @@ const Shop = () => {
                                     className={`tracking-wider text-center rounded-md py-3 cursor-pointer ${sortBy === 'rated' ? 'bg-[#66a15b] text-white' : 'bg-white'}`}
                                     onClick={() => setSortBy('rated')}
                                 >
-                                    Rated
+                                    Rating
                                 </p>
                             </div>
                         </div>
