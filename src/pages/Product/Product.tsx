@@ -85,6 +85,7 @@ const Product = () => {
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th></th>
                                             <th>Title</th>
                                             <th>Description</th>
                                             <th>Price</th>
@@ -98,6 +99,7 @@ const Product = () => {
                                             productData.map((product, index) => (
                                                 <tr key={product._id}>
                                                     <th>{index + 1}</th>
+                                                    <th><img className='w-32 border' src={product.image} alt="" /></th>
                                                     <td>{product.title}</td>
                                                     <td>{product.description}</td>
                                                     <td>{product.price}</td>
