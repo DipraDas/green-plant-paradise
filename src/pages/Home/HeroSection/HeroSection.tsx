@@ -1,3 +1,4 @@
+import { useNavigate, useNavigation } from 'react-router-dom';
 import t1 from '../../../assets/images/product/t1.png';
 import t2 from '../../../assets/images/product/t2.png';
 import t3 from '../../../assets/images/product/t3.png';
@@ -5,6 +6,7 @@ import t3 from '../../../assets/images/product/t3.png';
 import PrimaryButton from '../../../components/button/primaryButton/PrimaryButton';
 
 const HeroSection = () => {
+    const navigate = useNavigate();
     return (
         <div className='container mx-auto'>
             <div className="px-10 sm:px-12 2xl:px-32 mt-6 grid grid-cols-12 gap-6 h-[550px]">
@@ -18,7 +20,11 @@ const HeroSection = () => {
                             <p className='text-2xl font-semibold tracking-wider text-[#66a15b]'> $34.00</p>
                         </div>
                         <div className='mt-10'>
-                            <PrimaryButton title='SHOP NOW' />
+                            <PrimaryButton
+                                navigate={navigate}
+                                navigateTo="shop"
+                                title='SHOP NOW'
+                            />
                         </div>
                     </div>
                     <div className='py-5'>
