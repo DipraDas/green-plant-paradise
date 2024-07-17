@@ -1,8 +1,7 @@
 import Modal from 'react-modal';
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useGetCategoryQuery } from '../../redux/features/category/categoryApi';
 import { useCreateProductMutation } from '../../redux/features/product/productApi';
-import { TProduct } from '../../redux/features/product/productSlice';
 import { toast } from 'sonner';
 
 const customStyles = {
@@ -23,24 +22,30 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-const AddProductModal = ({ modalIsOpen, closeModal }) => {
+// Define the type for the props
+interface AddProductModalProps {
+    modalIsOpen: boolean;
+    closeModal: () => void;
+}
+
+const AddProductModal: React.FC<AddProductModalProps> = ({ modalIsOpen, closeModal }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [createProduct] = useCreateProductMutation();
     const imageHostKey = import.meta.env.VITE_imgbb_key;
-    const { data, error, isLoading } = useGetCategoryQuery(undefined);
+    const { data } = useGetCategoryQuery(undefined);
 
     let categoryData = []
     if (data && data.success) {
         categoryData = data.data
     }
 
-    const handleAddProduct = async (data: TProduct) => {
+    const handleAddProduct: SubmitHandler<FieldValues> = async (data) => {
         const toastId = toast.loading('Inserting product');
         try {
             const image = data.image[0];
             const formData = new FormData();
             formData.append("image", image);
-            const url = `https://api.imgbb.com/1/upload?key=c804b712774de48c844c1531dc5ffb84`;
+            const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
 
             const imgResponse = await fetch(url, {
                 method: "POST",
@@ -69,13 +74,14 @@ const AddProductModal = ({ modalIsOpen, closeModal }) => {
                 console.log(res)
                 reset()
                 toast.success("Inserted Successfully", { id: toastId, duration: 2000 });
+                closeModal();
             } else {
                 // throw new Error("Image upload failed.");
                 toast.error("Image upload failed.", { id: toastId, duration: 2000 })
             }
         } catch (error) {
-            console.error("Error adding product:", error.message);
-            toast.error(error.data.message, { id: toastId, duration: 2000 })
+            console.error("Error adding product:", error);
+            toast.error("Something went wrong. Please try again letter!", { id: toastId, duration: 2000 })
 
         }
     };
@@ -182,6 +188,7 @@ const AddProductModal = ({ modalIsOpen, closeModal }) => {
                         <input type="file" className="file-input file-input-bordered w-full"
                             {...register("image", { required: "Product image is required" })}
                         />
+                        {errors.image && <p className="text-red-500">{String(errors.image.message)}</p>}
                     </div>
                     <div className='col-span-4'>
                         <div className="cursor-pointer mt-9 flex items-center gap-3">
@@ -196,7 +203,7 @@ const AddProductModal = ({ modalIsOpen, closeModal }) => {
                     ADD PRODUCT
                 </button>
             </form>
-        </Modal>
+        </Modal >
     );
 };
 

@@ -10,7 +10,7 @@ export type TProduct = {
   description: string;
   briefDescription: string;
   category: string[];
-  featuredProduct: boolean;
+  featured: boolean;
 };
 
 type TProductInitial = {

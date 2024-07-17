@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { TProduct } from '../../redux/features/product/productSlice';
+import { toast } from 'sonner';
+import { useGetCategoryQuery } from '../../redux/features/category/categoryApi';
+import { useEditProductMutation } from '../../redux/features/product/productApi';
 
 const customStyles = {
     content: {
@@ -19,22 +23,83 @@ const customStyles = {
 };
 
 Modal.setAppElement('#root');
+// Define the type for the props
+interface EditProductModalProps {
+    modalIsOpen: boolean;
+    closeModal: () => void;
+    initialData: TProduct
+}
 
-const EditProductModal = ({ modalIsOpen, closeModal, initialData }) => {
+const EditProductModal: React.FC<EditProductModalProps> = ({ modalIsOpen, closeModal, initialData }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: initialData
     });
-    // Reset form values when initialData changes
+
     useEffect(() => {
-        const dataWithDefaults = {
-            ...initialData,
-            featuredProduct: initialData?.featured || false
-        };
-        reset(dataWithDefaults);
+        reset(initialData);
     }, [initialData, reset]);
 
-    console.log(initialData);
-    const onSubmit = handleSubmit((data) => console.log(data));
+    const imageHostKey = import.meta.env.VITE_imgbb_key;
+    const { data } = useGetCategoryQuery(undefined);
+    const [editProduct] = useEditProductMutation();
+
+    let categoryData = []
+    if (data && data.success) {
+        categoryData = data.data
+    }
+
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const toastId = toast.loading('Updating product');
+
+        let newImage = initialData.image;
+
+        const imageValue = data.edit_image[0];
+
+        if (imageValue) {
+            const formData = new FormData();
+            formData.append("image", imageValue);
+
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const imgData = await response.json();
+
+                if (imgData.success) {
+                    newImage = imgData.data.url;
+                } else {
+                    toast.error("Image upload failed", { id: toastId, duration: 2000 });
+                    return;
+                }
+            } catch (error) {
+                toast.error("Error uploading image:", { id: toastId, duration: 2000 });
+                return;
+            }
+        }
+
+        const price = parseInt(data.price)
+        const productData = {
+            title: data.title,
+            image: newImage,
+            price,
+            description: data.description,
+            briefDescription: data.briefDescription,
+            quantity: parseInt(data.quantity),
+            rating: parseInt(data.rating),
+            categories: [data.category], // Assuming data.categories is an array of category IDs
+            featured: data.featured
+        };
+
+        try {
+            await editProduct({ id: initialData?._id, productInfo: productData }).unwrap();
+            toast.success("Product updated successfully", { id: toastId, duration: 2000 });
+            closeModal();
+        } catch (error) {
+            toast.error("Something went wrong...", { id: toastId, duration: 2000 })
+        }
+    };
 
     return (
         <Modal
@@ -83,11 +148,13 @@ const EditProductModal = ({ modalIsOpen, closeModal, initialData }) => {
                                 <label className='mb-2 tracking-wider'>Category</label>
                                 <select
                                     className="select select-bordered w-full max-w-xs"
+                                    defaultValue={initialData?.categories[0]?._id || ""}
                                     {...register("category", { required: "Category is required" })}
                                 >
                                     <option value="" disabled>Select a category</option>
-                                    <option value="Han Solo">Han Solo</option>
-                                    <option value="Greedo">Greedo</option>
+                                    {categoryData.length && categoryData.map(category => (
+                                        <option key={category._id} value={category._id}>{category.name}</option>
+                                    ))}
                                 </select>
                                 {errors.category && <p className="text-red-500">{String(errors.category.message)}</p>}
                             </div>
@@ -127,11 +194,11 @@ const EditProductModal = ({ modalIsOpen, closeModal, initialData }) => {
                 <div className='grid grid-cols-12 gap-8 mt-4 items-center'>
                     <div className='flex flex-col col-span-8'>
                         <label className='mb-2 tracking-wider'>Change Image</label>
-                        <input type="file" className="file-input file-input-bordered w-full" />
+                        <input type="file" className="file-input file-input-bordered w-full" {...register('edit_image')} />
                     </div>
                     <div className='col-span-4'>
                         <div className="cursor-pointer mt-9 flex items-center gap-3">
-                            <input type="checkbox" className="checkbox" {...register('featuredProduct')} />
+                            <input type="checkbox" className="checkbox" {...register('featured')} />
                             <p className="text">Featured Product</p>
                         </div>
                     </div>

@@ -14,12 +14,19 @@ const productApi = baseApi.injectEndpoints({
       invalidatesTags: [{ type: "product", id: "LIST" }],
     }),
     getProduct: builder.query({
-      query: () => ({
-        url: "/product",
-        method: "GET",
-      }),
+      query: ({ page, limit } = {}) => {
+        let url = '/product';
+        if (page !== undefined && limit !== undefined) {
+          url += `?page=${page}&limit=${limit}`;
+        }
+        return {
+          url,
+          method: "GET",
+        };
+      },
       providesTags: [{ type: "product", id: "LIST" }],
     }),
+
     getSingleProduct: builder.query({
       query: (id) => ({
         url: `/product/${id}`,
