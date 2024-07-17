@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import OutlineButton from '../../../components/button/outlineButton/OutlineButton';
 import { addToCart } from '../../../redux/features/cart/cartSlice';
 import { useAppDispatch } from '../../../redux/hooks';
+import { toast } from 'sonner';
 
 interface Category {
     name: string;
@@ -47,6 +48,7 @@ const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
             category: product.categories[0].name
         };
         dispatch(addToCart(cartItem));
+        toast.success('Product added to cart')
     };
 
     return (

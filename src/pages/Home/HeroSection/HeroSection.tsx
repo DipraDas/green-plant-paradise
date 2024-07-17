@@ -1,4 +1,4 @@
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import t1 from '../../../assets/images/product/t1.png';
 import t2 from '../../../assets/images/product/t2.png';
 import t3 from '../../../assets/images/product/t3.png';

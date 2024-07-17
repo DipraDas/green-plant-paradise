@@ -1,8 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import plant1 from '../../../assets/images/product/plant-1.jpg';
 import plant2 from '../../../assets/images/product/plant-2.png';
 import PrimaryButton from '../../../components/button/primaryButton/PrimaryButton';
 
 const NewCollection = () => {
+
+    const navigate = useNavigate();
+
     return (
         <div className='relative mt-[1100px] lg:mt-0'>
             <div className="container mx-auto mt-32 mb-32">
@@ -23,7 +27,11 @@ const NewCollection = () => {
                         <div className='h-16 w-[1px] bg-gray-400 ms-14'>
                         </div>
                         <div className='mt-10'>
-                            <PrimaryButton title='SHOP NOW' />
+                            <PrimaryButton
+                                navigate={navigate}
+                                navigateTo="shop"
+                                title='SHOP NOW'
+                            />
                         </div>
                     </div>
                 </div>
